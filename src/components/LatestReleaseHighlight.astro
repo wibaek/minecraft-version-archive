@@ -16,24 +16,29 @@ const { majorRelease, latestRelease, totalReleaseCount, majorLineCount } = Astro
     <span class="brand-mark" aria-hidden="true"></span>
     Java Edition · Official releases
   </p>
-  <h1 id="archive-title">Minecraft Version Archive</h1>
-  <p class="archive-intro__lead">
-    Minecraft Java Edition 정식 릴리즈의 전체 기록입니다. {majorLineCount}개의 메이저 버전 라인에
-    걸친 {totalReleaseCount}개의 정식 릴리즈를 최신순으로 정리했습니다.
-  </p>
 
-  <section class="latest-callout" aria-label="Most recent release">
-    <div class="latest-callout__head">
-      <span class="latest-callout__tag">Latest</span>
-      <span class="latest-callout__version">{latestRelease.version}</span>
-      <span class={`release-label release-label--${latestRelease.label}`}>
-        {latestRelease.label}
-      </span>
-      <time class="latest-callout__date" datetime={latestRelease.releasedAt}>
-        {latestRelease.releasedAt}
-      </time>
+  <h1 id="archive-title" class="archive-intro__title">
+    <span class="archive-intro__product">Minecraft Java Edition</span>
+    <span class="archive-intro__version">{latestRelease.version}</span>
+  </h1>
+
+  <div class="archive-intro__meta">
+    <span class={`release-label release-label--${latestRelease.label}`}>{latestRelease.label}</span>
+    <time datetime={latestRelease.releasedAt}>{latestRelease.releasedAt}</time>
+    <span class="archive-intro__dot" aria-hidden="true">·</span>
+    <span>{majorRelease.name}</span>
+  </div>
+
+  <p class="archive-intro__lead">{latestRelease.summary}</p>
+
+  <dl class="archive-intro__stats">
+    <div>
+      <dt>{totalReleaseCount}</dt>
+      <dd>releases archived</dd>
     </div>
-    <p class="latest-callout__summary">{latestRelease.summary}</p>
-    <p class="latest-callout__line">{majorRelease.version} · {majorRelease.name}</p>
-  </section>
+    <div>
+      <dt>{majorLineCount}</dt>
+      <dd>major version lines</dd>
+    </div>
+  </dl>
 </header>

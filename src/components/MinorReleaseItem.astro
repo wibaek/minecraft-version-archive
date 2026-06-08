@@ -6,20 +6,44 @@ type Props = {
 };
 
 const { release } = Astro.props;
+const isCollapsible = release.label === "fix";
 ---
 
-<article class="release">
-  <div class="release__aside">
-    <time class="release__date" datetime={release.releasedAt}>{release.releasedAt}</time>
-  </div>
-  <div class="release__main">
-    <div class="release__head">
-      <h3 class="release__version">{release.version}</h3>
-      <span class={`release-label release-label--${release.label}`}>{release.label}</span>
-    </div>
-    <p class="release__summary">{release.summary}</p>
-    <ul class="release__changes">
-      {release.changes.map((change) => <li>{change}</li>)}
-    </ul>
-  </div>
-</article>
+{
+  isCollapsible ? (
+    <details class="release release--collapsible">
+      <summary class="release__head">
+        <span class="release__caret" aria-hidden="true" />
+        <h3 class="release__version">{release.version}</h3>
+        <time class="release__date" datetime={release.releasedAt}>
+          {release.releasedAt}
+        </time>
+        <span class={`release-label release-label--${release.label}`}>{release.label}</span>
+      </summary>
+      <div class="release__detail">
+        <p class="release__summary">{release.summary}</p>
+        <ul class="release__changes">
+          {release.changes.map((change) => (
+            <li>{change}</li>
+          ))}
+        </ul>
+      </div>
+    </details>
+  ) : (
+    <article class="release">
+      <div class="release__head">
+        <h3 class="release__version">{release.version}</h3>
+        <time class="release__date" datetime={release.releasedAt}>
+          {release.releasedAt}
+        </time>
+        <span class={`release-label release-label--${release.label}`}>{release.label}</span>
+      </div>
+      <p class="release__summary">{release.summary}</p>
+      <ul class="release__changes">
+        {release.changes.map((change) => (
+          <li>{change}</li>
+        ))}
+      </ul>
+    </article>
+  )
+}

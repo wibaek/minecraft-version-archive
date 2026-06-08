@@ -38,9 +38,9 @@
     sans-serif;
   --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", "Menlo", "Consolas", monospace;
 
-  --content-max: 760px;
-  --toc-width: 232px;
-  --page-max: 1080px;
+  --content-max: 780px;
+  --toc-width: 252px;
+  --page-max: 1680px;
   --header-height: 56px;
 
   --radius: 8px;

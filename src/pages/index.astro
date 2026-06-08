@@ -35,15 +35,17 @@ const majorLineCount = releaseData.length;
           majorLineCount={majorLineCount}
         />
         <div class="archive-shell">
-          <ReleaseArchive releases={releaseData} />
+          <div class="archive-main">
+            <ReleaseArchive releases={releaseData} />
+            <footer class="site-footer">
+              <p>
+                Java Edition official release archive. Release dates are fixed from the Piston Meta
+                manifest at implementation time.
+              </p>
+            </footer>
+          </div>
           <ReleaseToc items={tocItems} />
         </div>
-        <footer class="site-footer">
-          <p>
-            Java Edition official release archive. Release dates are fixed from the Piston Meta
-            manifest at implementation time.
-          </p>
-        </footer>
       </div>
     </main>
   </body>
