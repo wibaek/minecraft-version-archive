@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://minecraft-version-archive.pages.dev/sitemap-index.xml
