@@ -1,0 +1,23 @@
+---
+import type { MinorRelease } from "../data/release-types";
+
+type Props = {
+  release: MinorRelease;
+};
+
+const { release } = Astro.props;
+---
+
+<article class="minor-release">
+  <div class="minor-release__meta">
+    <time datetime={release.releasedAt}>{release.releasedAt}</time>
+    <span class={`release-label release-label--${release.label}`}>{release.label}</span>
+  </div>
+  <div class="minor-release__body">
+    <h3>{release.version}</h3>
+    <p>{release.summary}</p>
+    <ul>
+      {release.changes.map((change) => <li>{change}</li>)}
+    </ul>
+  </div>
+</article>

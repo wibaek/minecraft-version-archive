@@ -1,0 +1,22 @@
+:root {
+  color-scheme: light;
+  --color-ink: #171511;
+  --color-earth: #2f2d24;
+  --color-surface: #f3eddd;
+  --color-surface-raised: #fffaf0;
+  --color-stone: #7e8178;
+  --color-moss: #3f6f4a;
+  --color-grass: #79a861;
+  --color-copper: #b56a3b;
+  --color-redstone: #b72f2a;
+  --color-sky: #9db9c3;
+  --color-border: rgba(23, 21, 17, 0.16);
+  --color-muted: rgba(23, 21, 17, 0.64);
+  --shadow-soft: 0 22px 55px rgba(31, 30, 25, 0.18);
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --page-max: 1440px;
+  --content-max: 920px;
+  --toc-width: 260px;
+  --header-height: 68px;
+}

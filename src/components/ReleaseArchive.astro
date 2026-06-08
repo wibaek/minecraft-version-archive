@@ -1,0 +1,14 @@
+---
+import type { MajorRelease } from "../data/release-types";
+import MajorReleaseSection from "./MajorReleaseSection.astro";
+
+type Props = {
+  releases: MajorRelease[];
+};
+
+const { releases } = Astro.props;
+---
+
+<div class="release-archive" aria-label="Minecraft Java Edition official release archive">
+  {releases.map((release) => <MajorReleaseSection release={release} />)}
+</div>

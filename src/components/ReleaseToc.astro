@@ -1,0 +1,72 @@
+---
+import type { TocItem } from "../data/release-types";
+
+type Props = {
+  items: TocItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<aside class="release-toc" aria-label="Major version table of contents">
+  <details class="release-toc__mobile">
+    <summary>Major versions</summary>
+    <nav aria-label="Mobile major version navigation">
+      {items.map((item) => (
+        <a href={`#${item.id}`} data-toc-link={item.id}>
+          <span>{item.label}</span>
+          <small>{item.name}</small>
+        </a>
+      ))}
+    </nav>
+  </details>
+
+  <nav class="release-toc__desktop" aria-label="Major version navigation">
+    <p>Version index</p>
+    {items.map((item) => (
+      <a href={`#${item.id}`} data-toc-link={item.id}>
+        <span>{item.label}</span>
+        <small>{item.name}</small>
+      </a>
+    ))}
+  </nav>
+</aside>
+
+<script>
+  const links = Array.from(document.querySelectorAll("[data-toc-link]"));
+  const sections = Array.from(document.querySelectorAll("[data-major-section]"));
+
+  const setActiveSection = (sectionId: string | undefined) => {
+    for (const link of links) {
+      const isActive = link.getAttribute("data-toc-link") === sectionId;
+      link.classList.toggle("is-active", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    }
+  };
+
+  if ("IntersectionObserver" in window && sections.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target instanceof HTMLElement) {
+          setActiveSection(visible.target.dataset.majorSection);
+        }
+      },
+      {
+        rootMargin: "-18% 0px -62% 0px",
+        threshold: [0.1, 0.35, 0.6],
+      },
+    );
+
+    for (const section of sections) {
+      observer.observe(section);
+    }
+  }
+</script>

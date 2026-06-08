@@ -1,0 +1,46 @@
+---
+import AppHeader from "../components/AppHeader.astro";
+import LatestReleaseHighlight from "../components/LatestReleaseHighlight.astro";
+import ReleaseArchive from "../components/ReleaseArchive.astro";
+import ReleaseToc from "../components/ReleaseToc.astro";
+import { releaseData } from "../data/release-data";
+import { getLatestMinorRelease, getTocItems } from "../data/release-utils";
+import "../styles/tokens.css";
+import "../styles/global.css";
+
+const latestMajorRelease = releaseData[0];
+const latestRelease = getLatestMinorRelease(releaseData);
+const tocItems = getTocItems(releaseData);
+const totalReleaseCount = releaseData.reduce((count, release) => count + release.releases.length, 0);
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Minecraft Java Edition official release history archive." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Minecraft Version Archive</title>
+  </head>
+  <body id="top">
+    <AppHeader />
+    <main>
+      <LatestReleaseHighlight
+        majorRelease={latestMajorRelease}
+        latestRelease={latestRelease}
+        totalReleaseCount={totalReleaseCount}
+      />
+      <div class="archive-shell">
+        <ReleaseArchive releases={releaseData} />
+        <ReleaseToc items={tocItems} />
+      </div>
+    </main>
+    <footer class="site-footer">
+      <p>
+        Java Edition official release archive. Release dates are fixed from the Piston Meta
+        manifest at implementation time.
+      </p>
+    </footer>
+  </body>
+</html>

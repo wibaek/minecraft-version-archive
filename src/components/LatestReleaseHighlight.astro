@@ -1,0 +1,35 @@
+---
+import type { MajorRelease, MinorRelease } from "../data/release-types";
+
+type Props = {
+  majorRelease: MajorRelease;
+  latestRelease: MinorRelease;
+  totalReleaseCount: number;
+};
+
+const { majorRelease, latestRelease, totalReleaseCount } = Astro.props;
+---
+
+<section class="latest-release" aria-labelledby="latest-release-title">
+  <div class="latest-release__copy">
+    <p class="latest-release__eyebrow">Latest official Java release</p>
+    <h1 id="latest-release-title">Minecraft Java Edition {latestRelease.version}</h1>
+    <p class="latest-release__summary">{latestRelease.summary}</p>
+    <div class="latest-release__meta" aria-label="Archive status">
+      <span>{latestRelease.releasedAt}</span>
+      <span>{majorRelease.name}</span>
+      <span>{totalReleaseCount} official releases archived</span>
+    </div>
+  </div>
+
+  <div class="latest-release__panel" aria-label={`${latestRelease.version} highlights`}>
+    <div>
+      <span class="version-chip">{majorRelease.version}</span>
+      <h2>{majorRelease.name}</h2>
+      <p>{majorRelease.summary}</p>
+    </div>
+    <ul class="latest-release__highlights">
+      {majorRelease.highlights.slice(0, 4).map((highlight) => <li>{highlight}</li>)}
+    </ul>
+  </div>
+</section>

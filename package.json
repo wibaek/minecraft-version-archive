@@ -1,0 +1,22 @@
+{
+  "name": "minecraft-version-archive",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@biomejs/biome": "^2.4.16",
+    "astro": "^6.4.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  }
+}
