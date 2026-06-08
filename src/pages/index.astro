@@ -12,6 +12,7 @@ const latestMajorRelease = releaseData[0];
 const latestRelease = getLatestMinorRelease(releaseData);
 const tocItems = getTocItems(releaseData);
 const totalReleaseCount = releaseData.reduce((count, release) => count + release.releases.length, 0);
+const majorLineCount = releaseData.length;
 ---
 
 <!doctype html>
@@ -25,22 +26,25 @@ const totalReleaseCount = releaseData.reduce((count, release) => count + release
   </head>
   <body id="top">
     <AppHeader />
-    <main>
-      <LatestReleaseHighlight
-        majorRelease={latestMajorRelease}
-        latestRelease={latestRelease}
-        totalReleaseCount={totalReleaseCount}
-      />
-      <div class="archive-shell">
-        <ReleaseArchive releases={releaseData} />
-        <ReleaseToc items={tocItems} />
+    <main class="page">
+      <div class="page__inner">
+        <LatestReleaseHighlight
+          majorRelease={latestMajorRelease}
+          latestRelease={latestRelease}
+          totalReleaseCount={totalReleaseCount}
+          majorLineCount={majorLineCount}
+        />
+        <div class="archive-shell">
+          <ReleaseArchive releases={releaseData} />
+          <ReleaseToc items={tocItems} />
+        </div>
+        <footer class="site-footer">
+          <p>
+            Java Edition official release archive. Release dates are fixed from the Piston Meta
+            manifest at implementation time.
+          </p>
+        </footer>
       </div>
     </main>
-    <footer class="site-footer">
-      <p>
-        Java Edition official release archive. Release dates are fixed from the Piston Meta
-        manifest at implementation time.
-      </p>
-    </footer>
   </body>
 </html>

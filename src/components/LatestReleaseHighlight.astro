@@ -5,31 +5,35 @@ type Props = {
   majorRelease: MajorRelease;
   latestRelease: MinorRelease;
   totalReleaseCount: number;
+  majorLineCount: number;
 };
 
-const { majorRelease, latestRelease, totalReleaseCount } = Astro.props;
+const { majorRelease, latestRelease, totalReleaseCount, majorLineCount } = Astro.props;
 ---
 
-<section class="latest-release" aria-labelledby="latest-release-title">
-  <div class="latest-release__copy">
-    <p class="latest-release__eyebrow">Latest official Java release</p>
-    <h1 id="latest-release-title">Minecraft Java Edition {latestRelease.version}</h1>
-    <p class="latest-release__summary">{latestRelease.summary}</p>
-    <div class="latest-release__meta" aria-label="Archive status">
-      <span>{latestRelease.releasedAt}</span>
-      <span>{majorRelease.name}</span>
-      <span>{totalReleaseCount} official releases archived</span>
-    </div>
-  </div>
+<header class="archive-intro" aria-labelledby="archive-title">
+  <p class="archive-intro__eyebrow">
+    <span class="brand-mark" aria-hidden="true"></span>
+    Java Edition · Official releases
+  </p>
+  <h1 id="archive-title">Minecraft Version Archive</h1>
+  <p class="archive-intro__lead">
+    Minecraft Java Edition 정식 릴리즈의 전체 기록입니다. {majorLineCount}개의 메이저 버전 라인에
+    걸친 {totalReleaseCount}개의 정식 릴리즈를 최신순으로 정리했습니다.
+  </p>
 
-  <div class="latest-release__panel" aria-label={`${latestRelease.version} highlights`}>
-    <div>
-      <span class="version-chip">{majorRelease.version}</span>
-      <h2>{majorRelease.name}</h2>
-      <p>{majorRelease.summary}</p>
+  <section class="latest-callout" aria-label="Most recent release">
+    <div class="latest-callout__head">
+      <span class="latest-callout__tag">Latest</span>
+      <span class="latest-callout__version">{latestRelease.version}</span>
+      <span class={`release-label release-label--${latestRelease.label}`}>
+        {latestRelease.label}
+      </span>
+      <time class="latest-callout__date" datetime={latestRelease.releasedAt}>
+        {latestRelease.releasedAt}
+      </time>
     </div>
-    <ul class="latest-release__highlights">
-      {majorRelease.highlights.slice(0, 4).map((highlight) => <li>{highlight}</li>)}
-    </ul>
-  </div>
-</section>
+    <p class="latest-callout__summary">{latestRelease.summary}</p>
+    <p class="latest-callout__line">{majorRelease.version} · {majorRelease.name}</p>
+  </section>
+</header>

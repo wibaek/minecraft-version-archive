@@ -8,40 +8,69 @@ type Props = {
 const { items } = Astro.props;
 ---
 
-<aside class="release-toc" aria-label="Major version table of contents">
-  <details class="release-toc__mobile">
-    <summary>Major versions</summary>
-    <nav aria-label="Mobile major version navigation">
-      {items.map((item) => (
-        <a href={`#${item.id}`} data-toc-link={item.id}>
-          <span>{item.label}</span>
-          <small>{item.name}</small>
-        </a>
-      ))}
+<aside class="toc" aria-label="Major version table of contents">
+  <details class="toc__mobile">
+    <summary>
+      <span>Versions</span>
+      <span class="toc__count">{items.length}</span>
+    </summary>
+    <nav class="toc__mobile-list" aria-label="Major version navigation">
+      {
+        items.map((item) => (
+          <a href={`#${item.id}`} data-toc-link={item.id} title={item.name}>
+            <span class="toc__version">{item.label}</span>
+            <span class="toc__name">{item.name}</span>
+          </a>
+        ))
+      }
     </nav>
   </details>
 
-  <nav class="release-toc__desktop" aria-label="Major version navigation">
-    <p>Version index</p>
-    {items.map((item) => (
-      <a href={`#${item.id}`} data-toc-link={item.id}>
-        <span>{item.label}</span>
-        <small>{item.name}</small>
-      </a>
-    ))}
+  <nav class="toc__desktop" aria-label="Major version navigation">
+    <p class="toc__label">On this page</p>
+    <div class="toc__list">
+      {
+        items.map((item) => (
+          <a href={`#${item.id}`} data-toc-link={item.id} title={item.name}>
+            <span class="toc__version">{item.label}</span>
+            <span class="toc__name">{item.name}</span>
+          </a>
+        ))
+      }
+    </div>
   </nav>
 </aside>
 
 <script>
-  const links = Array.from(document.querySelectorAll("[data-toc-link]"));
-  const sections = Array.from(document.querySelectorAll("[data-major-section]"));
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]"));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-major-section]"));
+  const desktopList = document.querySelector<HTMLElement>(".toc__list");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const setActiveSection = (sectionId: string | undefined) => {
+  const keepActiveInView = (link: HTMLAnchorElement): void => {
+    if (!desktopList || !desktopList.contains(link)) {
+      return;
+    }
+
+    const linkRect = link.getBoundingClientRect();
+    const listRect = desktopList.getBoundingClientRect();
+
+    if (linkRect.top < listRect.top || linkRect.bottom > listRect.bottom) {
+      desktopList.scrollTo({
+        top: link.offsetTop - desktopList.clientHeight / 2 + link.clientHeight / 2,
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
+    }
+  };
+
+  const setActiveSection = (sectionId: string | undefined): void => {
     for (const link of links) {
-      const isActive = link.getAttribute("data-toc-link") === sectionId;
+      const isActive = link.dataset.tocLink === sectionId;
       link.classList.toggle("is-active", isActive);
+
       if (isActive) {
         link.setAttribute("aria-current", "true");
+        keepActiveInView(link);
       } else {
         link.removeAttribute("aria-current");
       }
@@ -60,8 +89,8 @@ const { items } = Astro.props;
         }
       },
       {
-        rootMargin: "-18% 0px -62% 0px",
-        threshold: [0.1, 0.35, 0.6],
+        rootMargin: "-12% 0px -70% 0px",
+        threshold: [0.05, 0.25, 0.5],
       },
     );
 

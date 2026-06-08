@@ -9,6 +9,6 @@ type Props = {
 const { releases } = Astro.props;
 ---
 
-<div class="release-archive" aria-label="Minecraft Java Edition official release archive">
+<div class="archive-doc" aria-label="Minecraft Java Edition official release archive">
   {releases.map((release) => <MajorReleaseSection release={release} />)}
 </div>

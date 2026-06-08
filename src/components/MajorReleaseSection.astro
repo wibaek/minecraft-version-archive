@@ -11,25 +11,29 @@ const { release } = Astro.props;
 const sectionId = createMajorReleaseId(release.version);
 ---
 
-<section class="major-release" id={sectionId} data-major-section={sectionId} aria-labelledby={`${sectionId}-title`}>
-  <div class="major-release__header">
-    <div>
-      <p class="major-release__eyebrow">Major line</p>
-      <h2 id={`${sectionId}-title`}>
-        <span>{release.version}</span>
-        {release.name}
-      </h2>
-    </div>
-    <time datetime={release.releasedAt}>{release.releasedAt}</time>
+<section
+  class="major"
+  id={sectionId}
+  data-major-section={sectionId}
+  aria-labelledby={`${sectionId}-title`}
+>
+  <div class="major__header">
+    <h2 id={`${sectionId}-title`} class="major__heading">
+      <span class="major__version">{release.version}</span>
+      <span class="major__name">{release.name}</span>
+    </h2>
+    <time class="major__date" datetime={release.releasedAt}>{release.releasedAt}</time>
   </div>
 
-  <p class="major-release__summary">{release.summary}</p>
+  <div class="major__body">
+    <p class="major__summary">{release.summary}</p>
 
-  <ul class="major-release__highlights">
-    {release.highlights.map((highlight) => <li>{highlight}</li>)}
-  </ul>
+    <ul class="major__highlights">
+      {release.highlights.map((highlight) => <li>{highlight}</li>)}
+    </ul>
 
-  <div class="major-release__list" aria-label={`${release.version} official releases`}>
-    {release.releases.map((minorRelease) => <MinorReleaseItem release={minorRelease} />)}
+    <div class="major__releases">
+      {release.releases.map((minorRelease) => <MinorReleaseItem release={minorRelease} />)}
+    </div>
   </div>
 </section>
